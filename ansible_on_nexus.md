@@ -5,7 +5,7 @@
 1. 在NXOS交换机上开启nxapi的特性 feature nxapi
 使用命令show feature | in enable 查看特性是否已经开启
 2. 登陆ansible的服务器,查看ansible的认证信息cat .netauth,并查看hosts文件信息，可以看到4台NXOS设备都被记录在资产表中了。
-![02](/inventory.PNG)
+![02](/images/inventory.PNG)
 3. 该实验环境下，ansible已经安装完成，可以使用ansible --version 查看安装的版本信息
 ![03](/images/ansible-version.PNG)
 ## 收集设备上的信息
