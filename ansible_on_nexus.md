@@ -1,13 +1,14 @@
 # 拓扑图
-[01]:./images/ansible-on-nexus-1.PNG
+[01]:.images/ansible-on-nexus-1.PNG
+![name](/images/inventory.PNG)
 # 需求
 利用ansible管理网络设备,并对设备进行配置
 1. 在NXOS交换机上开启nxapi的特性 feature nxapi
 使用命令show feature | in enable 查看特性是否已经开启
 2. 登陆ansible的服务器,查看ansible的认证信息cat .netauth,并查看hosts文件信息，可以看到4台NXOS设备都被记录在资产表中了。
-[02]:./images/inventory.PNG
+[02]:./inventory.PNG
 3. 该实验环境下，ansible已经安装完成，可以使用ansible --version 查看安装的版本信息
-[03]:./images/ansible-version.PNG
+[03]:.images/ansible-version.PNG
 ## 收集设备上的信息
 在ansible中我们可以制定一系列的操作，可以称为playbook，然后运行这个playbook，就可以按预先设定好的顺序执行操作。
 下图为我们要运行的playbook详细信息。在这个playbook中，分别做了查看cdp信息，查看管理路由，将信息记录在本地 总共三个操作。
