@@ -1,19 +1,19 @@
 # basic_action
 ## 实验一(通过ansible ad hoc命令查询设备的接口信息)
 拓扑如下:
-![01](./images/cisco/ios/topo.png)
-首先在hosts文件内添加路由器的IP地址192.168.1.251
-使用**ansible --list-host all**可以查看当前inventory的信息
-![02](./images/cisco/ios/list-host.PNG)
-使用**ansible 192.168.1.251 -m raw -a "sh ip int br" -u python -k**可以返回设备的接口信息
-![03](./images/cisco/ios/basic_action_3.PNG)
-* -m 用来指定模块.如果有被管理设备支持python的话,可以使用command和shell模块;但是如果老设备不支持的话,则需要使用raw模块来访问设备.
-* -a 表示参数,表示在设备上要执行的命令,命令内容用单引号或者双引号括起来
+![01](/images/cisco/ios/topo.png)  
+首先在hosts文件内添加路由器的IP地址192.168.1.251  
+使用**ansible --list-host all**可以查看当前inventory的信息  
+![02](./images/cisco/ios/list-host.PNG)  
+使用**ansible 192.168.1.251 -m raw -a "sh ip int br" -u python -k**可以返回设备的接口信息  
+![03](./images/cisco/ios/basic_action_3.PNG)  
+* -m 用来指定模块.如果有被管理设备支持python的话,可以使用command和shell模块;但是如果老设备不支持的话,则需要使用raw模块来访问设备.  
+* -a 表示参数,表示在设备上要执行的命令,命令内容用单引号或者双引号括起来  
 * -u 表示使用的用户
 * -k 提示用户输入密码
 ## 实验二(通过ansible playbook查询设备配置)
-首先创建一个route的playbook,用来查询设备上的路由信息
-![04](./images/cisco/ios/basic_action_4.png)
+首先创建一个route的playbook,用来查询设备上的路由信息  
+![04](./images/cisco/ios/basic_action_4.png)  
 * name: playbook的名称
 * hosts: 要执行的playbook的设备
 * gather_facts: 默认自动执行,用来发现远程主机的各种已有参数.消耗时间较长,而且我们暂时用不到,可以设置为false不执行该操作.
@@ -22,19 +22,19 @@
 * raw: 模块名称
 * register: 将执行命令后的输出结果保存,并存储在一个自定义的变量之中,这里为print_output
 * - debug: var=print_output.stdout_lines将自定义变量中的内容打印出来
-使用命令**ansible-playbook route.yml**执行命令(由于我在hosts文件中指定了设备的用户名和密码,所以在命令行中就不用指定了)
-![05](./images/cisco/ios/basic_action_5.png)
+使用命令**ansible-playbook route.yml**执行命令(由于我在hosts文件中指定了设备的用户名和密码,所以在命令行中就不用指定了)  
+![05](./images/cisco/ios/basic_action_5.png)  
 ## 实验三(使用playbook执行多条命令)
-raw模块最大的缺点是只能执行一条命令，无法批量输入命令.但是现在ansible对于很多厂商的设备开发了相关的模块,可以更好的支持对设备的控制.比如针对cisco的IOS系统,有相对的模块.
-![06](./images/cisco/ios/basic_action_6.png)
-比如ios_command和ios_config模块,前者不支持configure模式下的命令,而后者支持.所以在选择模块的时候,需要有针对性.
-首先创建一个multi_cmd.yml的playbook,用来查询接口信息和始终信息
-![07](./images/cisco/ios/basic_action_7.png)
-使用ansible-playbook执行命令之后,可以发现两条命令的结果都返回了.
-## 实验四(在设备使用show run命令,并保存配置)
-直接修改之前的playbook,并添加相应的操作即可.
-![08](./images/cisco/ios/basic_action_8.png)
-输出结果如下:在CLI下输出结果,并且可以在download文件夹下看到以设备IP命名的txt文件.
+raw模块最大的缺点是只能执行一条命令，无法批量输入命令.但是现在ansible对于很多厂商的设备开发了相关的模块,可以更好的支持对设备的控制.比如针对cisco的IOS系统,有相对的模块.  
+![06](./images/cisco/ios/basic_action_6.png)  
+比如ios_command和ios_config模块,前者不支持configure模式下的命令,而后者支持.所以在选择模块的时候,需要有针对性.  
+首先创建一个multi_cmd.yml的playbook,用来查询接口信息和始终信息  
+![07](./images/cisco/ios/basic_action_7.png)  
+使用ansible-playbook执行命令之后,可以发现两条命令的结果都返回了.  
+## 实验四(在设备使用show run命令,并保存配置)  
+直接修改之前的playbook,并添加相应的操作即可.  
+![08](./images/cisco/ios/basic_action_8.png)  
+输出结果如下:在CLI下输出结果,并且可以在download文件夹下看到以设备IP命名的txt文件.  
 ```
 [root@localhost ansible]# ansible-playbook download.yml
 
